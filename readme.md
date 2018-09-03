@@ -2,7 +2,7 @@
 
 通过定时任务触发，查询mongoDB的migu_video，得到当前上下线状态的视频的searchid；
 
-扫描xml文件，得到咪咕方需要上线的视频的searchid；
+扫描xml文件，得到需要上线的视频的searchid；
 
 双向求差集，得到需要下线和上线的视频的searchid；
 
