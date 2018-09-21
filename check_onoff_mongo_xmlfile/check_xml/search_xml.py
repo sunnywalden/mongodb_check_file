@@ -17,9 +17,9 @@ class SearchidofXml:
 	with codecs.open('config/config.ini', 'r', encoding='utf-8') as f:
     		cp.readfp(f)
 		self.dir = cp.get('xml','dir').strip()
-		self.xml_searchids_file = cp.get('files','xml_searchids_file').strip()
+		self.xml_ids_file = cp.get('files','xml_ids_file').strip()
 
-    def get_searchids(self):
+    def get_ids(self):
 	##定义存放xml文件所在一、二级路径的正则表达式	
 	pattern = re.compile(r'\d{3}\n')
 	file_pattern = re.compile(r'\d+.xml')
@@ -28,7 +28,7 @@ class SearchidofXml:
 	##获取符合正则表达式的路径列表	
 	xml_first_dirs = pattern.findall(xml_first_dirs_str)
 
-	searchids = []
+	ids = []
 
 	for first_dir in xml_first_dirs:
 		##逐个处理xml路径下符合要求的一级路径
@@ -60,14 +60,14 @@ class SearchidofXml:
 					xml_id = xml_file.strip('.xml')
 					#if subprocess.check_output(['ls',file_name.encode('UTF-8')]):
 					if os.path.isfile(file_name.encode('UTF-8')):
-						##得到searchid
-						searchid = f_dir + s_dir + xml_id
-						print(file_name,searchid)
-						searchids.append(searchid)
+						##得到id
+						id = f_dir + s_dir + xml_id
+						print(file_name,id)
+						ids.append(id)
 	##写入json文件
-	with open(self.xml_searchids_file,'w') as f:
-		json.dump(searchids, f)
-	return searchids			  
+	with open(self.xml_ids_file,'w') as f:
+		json.dump(ids, f)
+	return ids			  
 
     if __name__ == '__main__':
-	get_searchids()
+	get_ids()

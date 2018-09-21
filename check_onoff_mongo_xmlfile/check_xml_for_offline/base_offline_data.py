@@ -24,12 +24,12 @@ class OfflineBase(object):
         cp = ConfigParser.SafeConfigParser()
         with codecs.open('config/config.ini', 'r', encoding='utf-8') as f:
                 cp.readfp(f)
-                self.offline_searchids_file = cp.get('files','offline_searchids_file').strip().encode('UTF-8')
+                self.offline_ids_file = cp.get('files','offline_ids_file').strip().encode('UTF-8')
 
     def get_result_list(self, es_result):
         final_result = []
         for item in es_result:
-            final_result.append(item['_source']['searchId'])
+            final_result.append(item['_source']['Id'])
         return final_result
 
     def write_file(self, final_result):
@@ -57,8 +57,8 @@ class OfflineBase(object):
     def query_xml(self):
         result_list = []
         lists = self.get_search_result()
-        for search_id in lists:
-            xml_path = self.xml_root_path + '/' + search_id[0:3] + '/' + search_id[3:6] + '/' + search_id[6:9] + '.xml'
+        for id in lists:
+            xml_path = self.xml_root_path + '/' + id[0:3] + '/' + id[3:6] + '/' + id[6:9] + '.xml'
             if not os.path.exists(xml_path):
                 result_list.append(search_id)
         self.write_file(result_list)
@@ -67,18 +67,18 @@ class OfflineBase(object):
 
     def offline(self):
         searchIds = []
-        #with open('./searchid_offline.txt','r') as f:
+        #with open('./id_offline.txt','r') as f:
         with open(self.ids_file, 'r') as f:
             for line in f:
-                searchId = line.strip()
-                searchIds.append(searchId)
+                Id = line.strip()
+                Ids.append(Id)
 #        result_list = self.query_xml()
-        for searchId in searchIds:
-            print('offline searchid',searchId,'in ES')
+        for Id in Ids:
+            print('offline id',Id,'in ES')
             qsl_body = {
                 "query": {
                     "match": {
-                        "searchId": searchId
+                        "Id": Id
                     }
                 }
             }

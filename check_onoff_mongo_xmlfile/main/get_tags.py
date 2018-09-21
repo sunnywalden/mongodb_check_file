@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-##本脚本用于统计给定searchid视频画像中的标签
+##本脚本用于统计给定id的标签
 
 import ConfigParser
 
@@ -23,17 +23,17 @@ def get_config():
     with codecs.open('config/config.ini', 'r', encoding='utf-8') as f:  
         cp.readfp(f)
             
-        work_dir = cp.get('searchid_files','wk_dir').strip()
-        ids = work_dir + cp.get('searchid_files','ids').strip()
-        res_file = work_dir + cp.get('searchid_files','res_file').strip()
+        work_dir = cp.get('id_files','wk_dir').strip()
+        ids = work_dir + cp.get('id_files','ids').strip()
+        res_file = work_dir + cp.get('id_files','res_file').strip()
     print(ids,res_file)
     return ids,res_file
 
-def searchid_generater(ids):
+def id_generater(ids):
     print(ids)
 
     dates = ['2018-07-18', '2018-07-19']
-    searchids = []
+    ids = []
     with open(ids,'r') as f:
 	while True:
         	line = f.readline().strip()
@@ -44,27 +44,27 @@ def searchid_generater(ids):
 		record = {}
         	if line:
             		date = line.split('|')[2].split()[0].strip()
-            		searchid = line.split('|')[4].strip('\n').strip()
+            		id = line.split('|')[4].strip('\n').strip()
 	    
             		if date not in dates:
-				print('debug searchid:',searchid)
-                		searchids.append(searchid)
+				print('debug id:',id)
+                		ids.append(id)
             		else:
                 		pass
 		else:
 			pass
     
 
-    print(searchids)
-    return searchids
+    print(ids)
+    return ids
 
 
 def main():
     ids,res_file = get_config()
-    print('Debug searchid file before deal with it:', ids)
-    searchIds = searchid_generater(ids)
+    print('Debug id file before deal with it:', ids)
+    Ids = id_generater(ids)
 
-    check_vedio_status.check_status(searchIds,res_file)
+    check_vedio_status.check_status(Ids,res_file)
         
 
 if __name__  == '__main__':

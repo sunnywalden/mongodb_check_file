@@ -47,4 +47,4 @@ def socket_client(filepath):
 
 
 if __name__ == '__main__':
-    socket_client('/tmp/offline_searchids_file.txt')
+    socket_client('/tmp/ids_file.txt')
