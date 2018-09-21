@@ -5,24 +5,20 @@ import os
 import ConfigParser
 import codecs
 
-class OfflineTv(object):
+class OffId(object):
     def __init__(self):
         self.ES_HOSTS = [
-            'http://10.150.20.113:9201',
-            'http://10.150.20.114:9201',
-            'http://10.150.20.115:9201',
-            'http://10.150.20.116:9201',
-            'http://10.150.20.117:9201',
-            'http://10.150.20.118:9201',
+            'http://host1:9201',
+            'http://host2:9201',
         ]
         self.es_conn = Elasticsearch(self.ES_HOSTS)
-        self.tv_index = 'tv_poms_index_v3'
-        self.tv_type = 'tv_poms_data'
+        self.demo_index = 'demo_v3'
+        self.demo_type = 'logs'
         self.scroll = '5m'
         self.timeout = '1m'
-        self.xml_root_path = '/mnt/content'
-        self.output_path = '/data/TV_offline/'
-        self.file_name = 'search_id.txt'
+        self.xml_root_path = '/mnt/test'
+        self.output_path = '/data/demo/'
+        self.file_name = 'id.txt'
 
 #    def get_config(self):
         cp = ConfigParser.SafeConfigParser()
@@ -69,10 +65,10 @@ class OfflineTv(object):
         print len(result_list)
         return result_list
 
-    def offline(self):
+    def off(self):
         searchIds = []
-        #with open('./searchid_offline.txt','r') as f:
-        with open(self.offline_searchids_file,'r') as f:
+        #with open('./id.txt','r') as f:
+        with open(self.ids_file,'r') as f:
             for line in f:
                 searchId = line.strip()
                 searchIds.append(searchId)
@@ -90,6 +86,6 @@ class OfflineTv(object):
 
 
 if __name__ == '__main__':
-    offline = OfflineTv()
-    #offline.query_xml()
-    offline.offline()
+    offid = OffId()
+   
+    offid.off()
