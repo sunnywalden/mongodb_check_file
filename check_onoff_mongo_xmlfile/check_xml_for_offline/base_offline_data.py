@@ -8,23 +8,17 @@ import codecs
 class OfflineBase(object):
     def __init__(self):
         self.ES_HOSTS = [
-            'http://10.150.30.87:9201',
-            'http://10.150.30.88:9201',
-            'http://10.150.30.89:9201',
-            'http://10.150.30.90:9201',
-            'http://10.150.30.91:9201',
-            'http://10.150.30.92:9201',
-            'http://10.150.30.93:9201',
-            'http://10.150.30.94:9201',
+            'http://host1:9201',
+            'http://host2:9201',
         ]
         self.es_conn = Elasticsearch(self.ES_HOSTS)
-        self.tv_index = 'long_video_index_v1'
-        self.tv_type = 'long_video_data'
+        self.demo_index = 'demo_v1'
+        self.demo_type = 'logs'
         self.scroll = '5m'
         self.timeout = '1m'
-        self.xml_root_path = '/mnt/content'
-        self.output_path = '/data/base_offline/'
-        self.file_name = 'search_id.txt'
+        self.xml_root_path = '/mnt/test'
+        self.output_path = '/data/demo/'
+        self.file_name = 'id.txt'
 
 #    def get_config(self):
         cp = ConfigParser.SafeConfigParser()
@@ -74,7 +68,7 @@ class OfflineBase(object):
     def offline(self):
         searchIds = []
         #with open('./searchid_offline.txt','r') as f:
-        with open(self.offline_searchids_file, 'r') as f:
+        with open(self.ids_file, 'r') as f:
             for line in f:
                 searchId = line.strip()
                 searchIds.append(searchId)
